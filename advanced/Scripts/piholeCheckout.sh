@@ -74,7 +74,7 @@ checkout_pull_branch() {
   cd "${directory}" || return 1
 
   oldbranch="$(git symbolic-ref HEAD)"
-  
+
   git checkout "${branch}" || return 1
 
   if [[ "$(git diff "${oldbranch}" | grep -c "^")" -gt "0" ]]; then
@@ -82,13 +82,13 @@ checkout_pull_branch() {
   fi
 
   git_pull=$(git pull || return 1)
-  
+
   if [[ "$git_pull" == *"up-to-date"* ]]; then
     echo -e "\n  ${INFO} $(git pull)"
   else
     echo -e "$git_pull\n"
   fi
-  
+
   return 0
 }
 
@@ -116,7 +116,7 @@ checkout() {
   # Avoid globbing
   set -f
 
-  # This is unlikely
+  # This is unlikely. Adding in a comment that doesn't matter. Just testing the build
   if ! is_repo "${PI_HOLE_FILES_DIR}" ; then
     echo -e "  ${COL_LIGHT_RED}Error: Core Pi-hole repo is missing from system!
   Please re-run install script from https://github.com/pi-hole/pi-hole${COL_NC}"
@@ -160,7 +160,7 @@ checkout() {
       fetch_checkout_pull_branch "${webInterfaceDir}" "master" || { echo "  ${CROSS} Unable to pull Web master branch"; exit 1; }
     fi
     echo -e "  ${TICK} Web interface"
-     
+
   elif [[ "${1}" == "core" ]] ; then
     str="Fetching branches from ${piholeGitUrl}"
     echo -ne "  ${INFO} $str"
@@ -196,7 +196,7 @@ checkout() {
       exit 1
     fi
     webbranches=($(get_available_branches "${webInterfaceDir}"))
-    
+
     if [[ "${corebranches[@]}" == *"master"* ]]; then
       echo -e "${OVER}  ${TICK} $str
   ${INFO} ${#webbranches[@]} branches available for Web Admin"
