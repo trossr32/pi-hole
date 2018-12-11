@@ -39,7 +39,7 @@ Options:
   -h, --help          Show this help dialog
   -i, interface       Specify dnsmasq's interface listening behavior
                         Add '-h' for more info on interface usage
-  -s, speedtest       Set speedtest intevel , user 0 to disable Speedtests
+  -s, speedtest       Set speedtest interval , user 0 to disable Speedtests
                       use -sn to prevent logging to results list
   -sd                 Set speedtest display range
   -sn                 Run speedtest now
@@ -392,7 +392,7 @@ ClearSpeedtestData(){
     cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db $speedtestdb
 }
 
-ChageSpeedTestSchedule(){
+ChangeSpeedTestSchedule(){
   if [[ "${args[2]}" =~ ^[0-9]+$ ]]; then
       if [ "${args[2]}" -ge 0 -a "${args[2]}" -le 24 ]; then
           change_setting "SPEEDTESTSCHEDULE" "${args[2]}"
@@ -409,9 +409,7 @@ SpeedtestServer(){
       # Autoselect for invalid data
       change_setting "SPEEDTEST_SERVER" ""
   fi
-
 }
-
 
 RunSpeedtestNow(){
   mkdir -p /tmp/speedtest
@@ -667,7 +665,7 @@ main() {
         "audit"               ) addAudit "$@";;
         "clearaudit"          ) clearAudit;;
         "-l" | "privacylevel" ) SetPrivacyLevel;;
-        "-s" | "speedtest"    ) ChageSpeedTestSchedule;;
+        "-s" | "speedtest"    ) ChangeSpeedTestSchedule;;
         "-sd"                 ) UpdateSpeedTestRange;;
         "-sn"                 ) RunSpeedtestNow;;
         "-sc"                 ) ClearSpeedtestData;;
